@@ -2,19 +2,23 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Button, Alert } from 'react-native';
 import Colors from '../constants/Colors';
 import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
 
 
-const ImgPicker = () => {
+const ImgPicker = (props) => {
 
     const [img, setImg] = useState('');
 
     const verifyPermissions = async ()=> {
-        const result = await Permissions.askAsync(Permissions.CAMERA);
-        if(result.status!=='granted'){
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
             Alert.alert('Insufficient Permissions!' , 'You need to grant camera permissions to use this app', [{text: 'Okay'}]);
             return false;
         }
+        // const result = await Permissions.askAsync(Permissions.CAMERA);
+        // if(result.status!=='granted'){
+        //     Alert.alert('Insufficient Permissions!' , 'You need to grant camera permissions to use this app', [{text: 'Okay'}]);
+        //     return false;
+        // }
         return true;
     }
 
@@ -22,25 +26,28 @@ const ImgPicker = () => {
         const hasPermission = await verifyPermissions();
         if(!hasPermission)
             return;
-        const img = await ImagePicker.launchCameraAsync({
+        let result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            aspect: [16,9],
-            quality: 0.5
+            aspect: [4, 3],
+            quality: 1,
         });
-        console.log(img);
-        setImg(img.uri);
-        props.onImageTaken(image.uri);
+        console.log(result);
+        setImg(result.uri);
+        props.onImageTaken(result.uri);
     }
 
     return (
         <View style={styles.imagePicker}> 
             <View style={styles.imagePreview}>
                 {
-                    img!==''? 
+                    img!=='' && img?
                     <Image style={styles.image} source={{uri: img}} />:
                     <Text >No Image picked yet!</Text>
                 }
-                <Button title="Take Image" color={Colors.primary} onPress={takeImageHandler} />
+                {
+                    img!=='' && img? null:<Button title="Take Image" color={Colors.primary} onPress={takeImageHandler} />
+                }
             </View>
         </View>
     )
@@ -53,7 +60,7 @@ const styles = StyleSheet.create({
     },
     imagePreview: {
         width: '100%',
-        height: 200,
+        height: 300,
         marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'center',

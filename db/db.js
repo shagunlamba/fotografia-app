@@ -1,5 +1,4 @@
 import * as SQLite from 'expo-sqlite';
-import { add } from 'react-native-reanimated';
 
 const db = SQLite.openDatabase('fotografia.db');
 
