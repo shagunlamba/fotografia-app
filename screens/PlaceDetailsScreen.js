@@ -18,6 +18,16 @@ const PlaceDetailsScreen = (props) => {
     })
     console.log("The selectedPlace", selectedPlace);
 
+    const showMapHandler = ()=> {
+        props.navigation.navigate('Map', {
+            readOnly: true,
+            initialLocation: {
+                latitude: selectedPlace.lat,
+                longitude: selectedPlace.lng
+            }
+        });
+    }
+
     return (
         <ScrollView contentContainerStyle={{alignItems: 'center'}}>
             <Image source={{uri: selectedPlace.imageUri}} style={styles.image}/>
@@ -32,6 +42,7 @@ const PlaceDetailsScreen = (props) => {
                     }
                     }
                     style={styles.mapPreview}
+                    onPress={showMapHandler}
                 />
             </View>
         </ScrollView>
