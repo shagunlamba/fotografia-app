@@ -17,10 +17,7 @@ const LocationPicker = (props) => {
     useEffect(() => {
        if(mapPickedLocation){
             setPickedLocation(mapPickedLocation);
-            onLocationPicked({
-                latitude: loc.coords.latitude,
-                longitude: loc.coords.longitude
-            });
+            onLocationPicked(mapPickedLocation);
        }
     }, [mapPickedLocation,onLocationPicked])
 

@@ -1,16 +1,16 @@
 import * as FileSystem from 'expo-file-system';
-import { add } from 'react-native-reanimated';
 import { insertPlace, fetchPlaces } from '../db/db';
 
 export const ADD_PLACE = 'ADD_PLACE';
 export const SET_PLACES = 'SET_PLACES';
+import Key from '../env';
 
 export const addPlace = (title, img, location)=> {
     return async dispatch => {
         const fileName= img.split("/").pop();
         const newPath = FileSystem.documentDirectory + fileName;
-
-        const response = await fetch(`http://www.mapquestapi.com/geocoding/v1/reverse?key=zJfNJ3WHDsz4um7KzL3t1dXbLt4AXlnj&location=${location.latitude},${location.longitude}&includeRoadMetadata=true&includeNearestIntersection=true`)
+        console.log("the key", process.env.REACT_APP_API_KEY);
+        const response = await fetch(`http://www.mapquestapi.com/geocoding/v1/reverse?key=${Key}&location=${location.latitude},${location.longitude}&includeRoadMetadata=true&includeNearestIntersection=true`)
         if(!response.ok){
             throw new Error("Something went Wrong!");
         }
