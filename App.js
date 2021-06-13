@@ -6,7 +6,7 @@ import ReduxThunk from 'redux-thunk';
 import placesReducer from './store/places-reducer';
 import { init } from './db/db';
 import { StatusBar } from 'expo-status-bar';
- 
+// Checking the remote
 init()
 .then(()=>{
   console.log("Initialized database");

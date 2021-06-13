@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const PlaceDetailsScreen = (props) => {
 
     const placeId = props.navigation.getParam('placeId');
-    console.log("The placeId", placeId);
+    // console.log("The placeId", placeId);
     const selectedPlace = useSelector((state)=>{
         const val = state.places.places.find((pl)=>{
             if(pl.id===placeId){
@@ -16,7 +16,7 @@ const PlaceDetailsScreen = (props) => {
         });
         return val;
     })
-    console.log("The selectedPlace", selectedPlace);
+    // console.log("The selectedPlace", selectedPlace);
 
     const showMapHandler = ()=> {
         props.navigation.navigate('Map', {

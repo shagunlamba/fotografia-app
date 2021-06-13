@@ -9,7 +9,6 @@ export const addPlace = (title, img, location)=> {
     return async dispatch => {
         const fileName= img.split("/").pop();
         const newPath = FileSystem.documentDirectory + fileName;
-        console.log("the key", process.env.REACT_APP_API_KEY);
         const response = await fetch(`http://www.mapquestapi.com/geocoding/v1/reverse?key=${Key}&location=${location.latitude},${location.longitude}&includeRoadMetadata=true&includeNearestIntersection=true`)
         if(!response.ok){
             throw new Error("Something went Wrong!");
